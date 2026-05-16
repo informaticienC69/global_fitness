@@ -103,27 +103,29 @@ const Navbar = () => {
       </div>
 
       {/* ── Mobile Menu ── */}
-      <div className={`md:hidden glass border-t border-white/5 transition-all duration-400 overflow-hidden ${mobileMenuOpen ? 'max-h-[400px] opacity-100 py-6' : 'max-h-0 opacity-0'}`}>
-        <nav className="flex flex-col items-center gap-5 px-6">
-          {links.map(link => (
+      {mobileMenuOpen && (
+        <div className="md:hidden glass border-t border-white/5 py-6 animate-in fade-in slide-in-from-top-4 duration-300">
+          <nav className="flex flex-col items-center gap-5 px-6">
+            {links.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-gray-200 hover:text-white font-body text-sm uppercase tracking-[0.15em] font-500 transition-colors w-full text-center py-2"
+              >
+                {link.label}
+              </a>
+            ))}
             <a
-              key={link.href}
-              href={link.href}
+              href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-200 hover:text-white font-body text-sm uppercase tracking-[0.15em] font-500 transition-colors w-full text-center py-1"
+              className="btn-primary w-full mt-2 text-center"
             >
-              {link.label}
+              Essai Gratuit
             </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="btn-primary w-full mt-2 text-center"
-          >
-            Essai Gratuit
-          </a>
-        </nav>
-      </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

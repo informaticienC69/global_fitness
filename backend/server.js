@@ -42,15 +42,17 @@ const allowedOrigins = process.env.FRONTEND_URL
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'La politique CORS de ce site ne permet pas l\'accès depuis cette origine.';
-      return callback(new Error(msg), false);
+    // Autoriser si pas d'origine (requête serveur) ou localhost ou domaine vercel
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    const msg = 'La politique CORS de ce site ne permet pas l\'accès depuis cette origine.';
+    return callback(new Error(msg), false);
   }
 }));
+
+// Nécessaire pour express-rate-limit sur Vercel (Reverse Proxy)
+app.set('trust proxy', 1);
 
 app.use(express.json());
 
@@ -65,6 +67,11 @@ const pool = mariadb.createPool({
 
 // Initialization Script (for dev setup)
 async function initDB() {
+  // Sur Vercel, on saute l'initialisation DB locale pour éviter un timeout de 10s.
+  if (process.env.VERCEL && (!process.env.DB_HOST || process.env.DB_HOST === 'localhost')) {
+    console.log("Mode Vercel détecté sans base de données distante. DB ignorée.");
+    return;
+  }
   try {
     const conn = await pool.getConnection();
     await conn.query(`
@@ -117,21 +124,26 @@ app.post('/api/contact', async (req, res) => {
   }
 
   // 1. Sauvegarde en DB (optionnel)
-  try {
-    const conn = await pool.getConnection();
-    await conn.query(
-      'INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)',
-      [name, email, message]
-    );
-    conn.release();
-  } catch (err) {
-    console.warn('DB contact save failed (degraded mode):', err.message);
+  if (!(process.env.VERCEL && (!process.env.DB_HOST || process.env.DB_HOST === 'localhost'))) {
+    try {
+      const conn = await pool.getConnection();
+      await conn.query(
+        'INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)',
+        [name, email, message]
+      );
+      conn.release();
+    } catch (err) {
+      console.warn('DB contact save failed (degraded mode):', err.message);
+    }
   }
 
-  // 2. Envoi email en arrière-plan (asynchrone, sans await pour plus de rapidité)
-  sendContactNotification({ name, email, phone, address, message })
-    .then(() => console.log(`📩 Message de contact de ${name} (${email}) — email envoyé`))
-    .catch((err) => console.error('Erreur envoi email contact:', err.message));
+  // 2. Envoi email (doit être fait AVANT de répondre sur Vercel, sinon la fonction s'arrête)
+  try {
+    await sendContactNotification({ name, email, phone, address, message });
+    console.log(`📩 Message de contact de ${name} (${email}) — email envoyé`);
+  } catch (err) {
+    console.error('Erreur envoi email contact:', err.message);
+  }
 
   res.status(201).json({
     success: true,
@@ -151,20 +163,27 @@ app.post('/api/orders', async (req, res) => {
   const orderId = 'GF-' + Date.now().toString(36).toUpperCase();
   const order = { id: orderId, customer, items, total };
 
-  // Répondre immédiatement au frontend pour éviter les lenteurs
-  res.status(201).json({
-    success: true,
-    orderId,
-    message: `Commande confirmée ! Une facture vous sera envoyée à ${customer.email}`,
-  });
-
-  // Envoyer les emails en arrière-plan
-  Promise.all([
-    sendOwnerNotification(order),
-    sendClientInvoice(order),
-  ])
-  .then(() => console.log(`✅ Commande ${orderId} — emails envoyés à ${customer.email}`))
-  .catch((err) => console.error('Erreur envoi email commande:', err.message));
+  // Envoyer les emails AVANT de répondre, sinon Vercel coupe la fonction serverless
+  try {
+    await Promise.all([
+      sendOwnerNotification(order),
+      sendClientInvoice(order),
+    ]);
+    console.log(`✅ Commande ${orderId} — emails envoyés à ${customer.email}`);
+    
+    res.status(201).json({
+      success: true,
+      orderId,
+      message: `Commande confirmée ! Une facture vous a été envoyée à ${customer.email}`,
+    });
+  } catch (err) {
+    console.error('Erreur envoi email commande:', err.message);
+    res.status(201).json({
+      success: true,
+      orderId,
+      message: 'Commande enregistrée. Notre équipe vous contactera sous 24h.',
+    });
+  }
 });
 
 // ─── Déploiement : Servir l'application React ─────────────────────────────────
