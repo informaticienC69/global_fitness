@@ -1,8 +1,7 @@
 import React from 'react';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
-  const revealRef = useScrollReveal();
 
   const stats = [
     { value: '500+', label: 'Clients Équipés' },
@@ -22,27 +21,57 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row lg:items-center gap-16 lg:gap-24">
 
           {/* ── Left: Text content ── */}
-          <div ref={revealRef} className="flex-1 animate-on-scroll">
-            <div className="flex items-center gap-3 mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1"
+          >
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="flex items-center gap-3 mb-8"
+            >
               <div className="divider-brand" />
               <span className="eyebrow">Dakar, Sénégal · global_fit_sport</span>
-            </div>
+            </motion.div>
 
-            <h1 className="font-display text-white mb-4" style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="font-display text-white mb-4" style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}
+            >
               ÉQUIPEZ VOTRE<br />
               <span className="text-gradient italic font-black">ESPACE.</span><br />
               PERFORMEZ.
-            </h1>
+            </motion.h1>
 
-            <p className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-3 max-w-xl">
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-3 max-w-xl"
+            >
               <strong className="text-white font-600">Vente · Installation · Maintenance</strong>
-            </p>
-            <p className="font-body text-gray-400 text-sm leading-relaxed mb-10 max-w-xl">
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="font-body text-gray-400 text-sm leading-relaxed mb-10 max-w-xl"
+            >
               Nous accompagnons particuliers et professionnels dans la création d'espaces fitness performants — de la sélection du matériel à la mise en service complète.
-            </p>
+            </motion.p>
 
             {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
               <a href="#shop" id="hero-cta-shop" className="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -53,10 +82,15 @@ const Hero = () => {
               <a href="#contact" id="hero-cta-contact" className="btn-outline">
                 Devis gratuit
               </a>
-            </div>
+            </motion.div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-3 mt-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="flex flex-wrap gap-3 mt-8"
+            >
               {['Installation pro', 'SAV réactif', 'Techniciens certifiés', 'Devis gratuit'].map((b) => (
                 <span key={b} className="flex items-center gap-1.5 text-[11px] font-body font-600 uppercase tracking-wider text-gray-400">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="3" strokeLinecap="round">
@@ -65,8 +99,8 @@ const Hero = () => {
                   {b}
                 </span>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* ── Right: Stats grid ── */}
           <div className="flex-shrink-0 lg:w-80 w-full">
