@@ -128,31 +128,33 @@ const Hero = () => {
                 </span>
               ))}
             </motion.div>
+
+            {/* Stats inline at bottom of left column */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/10"
+            >
+              {stats.map((s, i) => (
+                <div key={i} className="flex flex-col">
+                  <div className="font-display text-3xl font-black text-white mb-1">{s.value}</div>
+                  <div className="font-body text-[#F5A623] text-[10px] font-bold uppercase tracking-[0.15em]">{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* ── Right: Stats + Photo Carousel ── */}
+          {/* ── Right: Portrait Photo Carousel ── */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-shrink-0 lg:w-[360px] w-full flex flex-col gap-3"
+            className="flex-shrink-0 lg:w-[420px] w-full"
           >
-            {/* Stats grid 2×2 */}
-            <div className="grid grid-cols-2 gap-3">
-              {stats.map((s, i) => (
-                <div
-                  key={i}
-                  className="glass card-hover rounded-xl p-5 border border-white/5 text-center"
-                >
-                  <div className="font-display text-3xl font-black text-gradient mb-1">{s.value}</div>
-                  <div className="font-body text-gray-400 text-[11px] uppercase tracking-[0.15em]">{s.label}</div>
-                </div>
-              ))}
-            </div>
-
             {/* ── Photo Carousel ── */}
-            <div className="relative mt-1 rounded-2xl overflow-hidden border border-[#F5A623]/20 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
-              style={{ height: '230px' }}>
+            <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.8)]"
+              style={{ height: '560px' }}>
 
               {/* Sliding images */}
               <AnimatePresence mode="wait">
