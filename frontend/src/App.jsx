@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
+import Installations from './components/Installations';
 import Shop from './components/Shop';
 import Contact from './components/Contact';
 import CartDrawer from './components/CartDrawer';
@@ -60,6 +61,7 @@ function App() {
       <main className="flex-grow pt-0 relative z-10">
         <Hero />
         <Services />
+        <Installations />
         <Shop />
         <About />
         <Contact />
