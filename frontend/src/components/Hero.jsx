@@ -4,20 +4,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ─── 4 photos de techniciens / installations fitness ──
 const SLIDES = [
   {
-    url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=85',
-    caption: 'Installation sur site',
+    url: '/photos/tech1.jpg',
+    caption: 'Configuration TechnoGym',
   },
   {
-    url: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=700&q=85',
-    caption: 'Mise en service complète',
+    url: '/photos/tech2.jpg',
+    caption: 'Agencement & Installation',
   },
   {
-    url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=85',
-    caption: 'Équipements professionnels',
+    url: '/photos/tech3.jpg',
+    caption: 'Montage sur site',
   },
   {
-    url: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=700&q=85',
-    caption: 'Salle prête à l\'emploi',
+    url: '/photos/tech4.jpg',
+    caption: 'Équipe certifiée Global Fit Sport',
   },
 ];
 
