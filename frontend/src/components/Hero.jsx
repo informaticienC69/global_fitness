@@ -29,9 +29,9 @@ const Hero = () => {
             </div>
 
             <h1 className="font-display text-white mb-4" style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}>
-              VOTRE SALLE<br />
-              <span className="text-gradient italic font-black">PRÊTE À</span><br />
-              L'EMPLOI.
+              ÉQUIPEZ VOTRE<br />
+              <span className="text-gradient italic font-black">ESPACE.</span><br />
+              PERFORMEZ.
             </h1>
 
             <p className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-3 max-w-xl">
@@ -43,14 +43,15 @@ const Hero = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#services" id="hero-cta-services" className="btn-primary">
+              <a href="#shop" id="hero-cta-shop" className="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
                 </svg>
-                Nos services
+                Voir les produits
               </a>
-              <a href="#shop" id="hero-cta-shop" className="btn-outline">
-                Voir la boutique
+              <a href="#contact" id="hero-cta-contact" className="btn-outline">
+                Devis gratuit
               </a>
             </div>
 
@@ -99,7 +100,7 @@ const Hero = () => {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer"
-          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
+          onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
           <span className="font-body text-[10px] uppercase tracking-[0.2em] text-gray-400">Scroll</span>
           <svg className="w-4 h-4 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
