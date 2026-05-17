@@ -37,27 +37,27 @@ const ProductModal = ({ product, onClose }) => {
         </button>
 
         {/* ── Left Column : Image ── */}
-        <div className="md:w-1/2 relative bg-[#111] flex items-center justify-center overflow-hidden min-h-[300px] md:min-h-full flex-shrink-0">
+        <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-[#111] flex-shrink-0 border-b md:border-b-0 md:border-r border-white/10">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-cover"
           />
           {product.badge && (
-            <span className="absolute top-5 left-5 text-xs font-body font-bold uppercase tracking-[0.12em] bg-brand text-white px-3 py-1.5 rounded-full shadow-[0_2px_15px_rgba(230,57,70,0.4)]">
+            <span className="absolute top-5 left-5 text-xs font-body font-bold uppercase tracking-[0.12em] bg-brand text-black px-3 py-1.5 rounded-full shadow-[0_4px_15px_rgba(245,166,35,0.4)]">
               {product.badge}
             </span>
           )}
         </div>
 
         {/* ── Right Column : Details ── */}
-        <div className="md:w-1/2 p-8 md:p-12 flex flex-col overflow-y-auto custom-scrollbar relative">
+        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col overflow-y-auto custom-scrollbar relative">
           {/* Background glow */}
           <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-brand/5 to-transparent pointer-events-none" />
 
           <div className="relative z-10 flex-1 flex flex-col">
-            <span className="eyebrow mb-3">{product.category}</span>
-            <h2 className="font-display text-white text-3xl md:text-4xl uppercase font-bold leading-tight mb-4">
+            <span className="eyebrow mb-2">{product.category}</span>
+            <h2 className="font-display text-white text-2xl md:text-4xl uppercase font-bold leading-tight mb-4">
               {product.name}
             </h2>
 
@@ -65,18 +65,18 @@ const ProductModal = ({ product, onClose }) => {
             <div className="flex items-center gap-1.5 mb-6">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} width="14" height="14" viewBox="0 0 24 24"
-                  fill={i < product.rating ? '#E63946' : 'none'}
-                  stroke="#E63946" strokeWidth="1.5">
+                  fill={i < product.rating ? '#F5A623' : 'none'}
+                  stroke="#F5A623" strokeWidth="1.5">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               ))}
-              <span className="font-body text-gray-500 text-xs ml-2 uppercase tracking-wider">{product.reviews} avis clients</span>
+              <span className="font-body text-gray-500 text-[10px] md:text-xs ml-2 uppercase tracking-wider">{product.reviews} avis clients</span>
             </div>
 
             {/* Description */}
             <div className="mb-8">
-              <h3 className="text-white font-body font-bold text-sm uppercase tracking-wider mb-2">Description du produit</h3>
-              <p className="font-body text-gray-400 text-sm leading-relaxed">
+              <h3 className="text-white font-body font-bold text-xs md:text-sm uppercase tracking-wider mb-2">Description du produit</h3>
+              <p className="font-body text-gray-400 text-xs md:text-sm leading-relaxed">
                 {product.desc}
               </p>
               {/* Fake extra details for a more complete look */}
@@ -91,7 +91,7 @@ const ProductModal = ({ product, onClose }) => {
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-brand" />
-                  Livraison disponible à Dakar et environs
+                  Livraison et Installation disponibles
                 </li>
               </ul>
             </div>
@@ -99,9 +99,9 @@ const ProductModal = ({ product, onClose }) => {
             <div className="mt-auto pt-6 border-t border-white/10">
               <div className="flex items-end gap-4 mb-6">
                 <div>
-                  <div className="font-display text-white text-3xl font-black">{fmt(product.price)}</div>
+                  <div className="font-display text-white text-2xl md:text-3xl font-black">{fmt(product.price)}</div>
                   {product.oldPrice && (
-                    <div className="font-body text-gray-500 text-sm line-through mt-1">Ancien prix : {fmt(product.oldPrice)}</div>
+                    <div className="font-body text-gray-500 text-xs md:text-sm line-through mt-1">Ancien prix : {fmt(product.oldPrice)}</div>
                   )}
                 </div>
               </div>
@@ -114,7 +114,7 @@ const ProductModal = ({ product, onClose }) => {
                     ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
                     : added
                       ? 'bg-green-500 text-white'
-                      : 'bg-brand text-white shadow-[0_10px_30px_rgba(230,57,70,0.3)] hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(230,57,70,0.5)]'
+                      : 'bg-brand text-black shadow-[0_10px_30px_rgba(245,166,35,0.3)] hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(245,166,35,0.5)]'
                 }`}
               >
                 {added ? (
