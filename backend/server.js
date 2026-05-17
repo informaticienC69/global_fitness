@@ -90,7 +90,6 @@ async function initDB() {
   }
 }
 initDB();
-verifyMailer();
 
 // Test DB Connection
 app.get('/api/health', (req, res) => {
