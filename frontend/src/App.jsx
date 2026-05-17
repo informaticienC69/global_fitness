@@ -39,11 +39,20 @@ function App() {
 
   return (
     <CartProvider>
-      {/* Clean dark brand background */}
-      <div className="fixed inset-0 z-[-2] bg-[#0F0F0F]">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] via-[#0F0F0F] to-[#0F0F0F]" />
-        <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-[#F5A623]/4 blur-[180px]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-[#E8820C]/3 blur-[150px]" />
+      {/* ── Premium Studio Background ── */}
+      <div className="fixed inset-0 z-[-2] bg-[#0A0A0A] overflow-hidden">
+        {/* Technical grid */}
+        <div className="absolute inset-0 bg-grid opacity-60" />
+        
+        {/* Deep radial shadow (vignette) to hide grid edges */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#0A0A0A_80%)]" />
+
+        {/* Ambient brand glows */}
+        <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] rounded-full bg-gradient-to-b from-[#F5A623]/5 to-transparent blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-t from-[#E8820C]/4 to-transparent blur-[100px] pointer-events-none" />
+        
+        {/* Noise overlay for matte finish */}
+        <div className="absolute inset-0 opacity-40 mix-blend-overlay noise pointer-events-none" />
       </div>
 
       <Navbar />
