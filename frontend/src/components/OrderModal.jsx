@@ -49,11 +49,11 @@ const OrderModal = ({ onClose, onSuccess }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[100] flex flex-col pt-28 pb-8 px-4 sm:px-6 overflow-y-auto"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-3xl bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in zoom-in-95 duration-300">
+      <div className="w-full max-w-3xl bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in zoom-in-95 duration-300 my-auto flex-shrink-0">
         
         {/* Close Button (Top Right) */}
         <button

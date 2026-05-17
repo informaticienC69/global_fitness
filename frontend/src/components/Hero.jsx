@@ -5,10 +5,10 @@ const Hero = () => {
   const revealRef = useScrollReveal();
 
   const stats = [
-    { value: '500+', label: 'Membres Actifs' },
-    { value: '8',    label: 'Disciplines' },
-    { value: '12+',  label: 'Coachs Experts' },
-    { value: '5★',   label: 'Note Moyenne' },
+    { value: '500+', label: 'Clients Satisfaits' },
+    { value: '100+', label: 'Produits Disponibles' },
+    { value: '24h',  label: 'Livraison Dakar' },
+    { value: '5★',   label: 'Avis Clients' },
   ];
 
   return (
@@ -17,9 +17,9 @@ const Hero = () => {
       {/* Gradient overlays for depth */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-black/75 z-0" />
 
-      {/* Red glow accent top-right */}
+      {/* Orange glow accent top-right */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-brand/10 blur-[120px] pointer-events-none z-0" />
-      {/* Orange glow bottom-left */}
+      {/* Glow bottom-left */}
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-accent/8 blur-[100px] pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 md:px-10 relative z-10">
@@ -30,30 +30,30 @@ const Hero = () => {
             {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-8">
               <div className="divider-brand" />
-              <span className="eyebrow">Dakar, Sénégal — Depuis 2020</span>
+              <span className="eyebrow">Dakar, Sénégal — Boutique en ligne</span>
             </div>
 
             {/* Main headline */}
-            <h1 className="font-display text-white mb-6" style={{ fontSize: 'clamp(3.5rem, 9vw, 7.5rem)', lineHeight: '0.95' }}>
-              FORGEZ<br />
-              <span className="text-gradient italic font-black">VOTRE</span><br />
-              LÉGENDE
+            <h1 className="font-display text-white mb-6" style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)', lineHeight: '0.95' }}>
+              ÉQUIPEZ-VOUS.<br />
+              <span className="text-gradient italic font-black">PERFORMEZ.</span>
             </h1>
 
             <p className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-10 max-w-xl">
-              Global Fitness est bien plus qu'une salle. C'est un <strong className="text-white font-500">écosystème d'élite</strong> conçu pour transformer votre corps et votre mental — avec les meilleurs coachs de Dakar.
+              La boutique fitness <strong className="text-white font-500">#1 au Sénégal</strong>. Haltères, racks, machines, accessoires — du matériel professionnel livré rapidement à Dakar et partout au Sénégal.
             </p>
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#contact" id="hero-cta-free" className="btn-primary">
+              <a href="#shop" id="hero-cta-shop" className="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
                 </svg>
-                Séance d'Essai Gratuite
+                Voir les produits
               </a>
-              <a href="#services" id="hero-cta-discover" className="btn-outline">
-                Découvrir
+              <a href="#contact" id="hero-cta-contact" className="btn-outline">
+                Nous contacter
               </a>
             </div>
           </div>
@@ -73,15 +73,15 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* Open badge */}
+            {/* Livraison badge */}
             <div className="mt-3 glass rounded-xl p-4 border border-white/5 flex items-center gap-3">
               <div className="relative w-3 h-3 flex-shrink-0">
                 <span className="block w-3 h-3 rounded-full bg-green-400" />
                 <span className="pulse-dot absolute inset-0 rounded-full bg-green-400" />
               </div>
               <div className="font-body">
-                <p className="text-white text-xs font-600">Ouvert Maintenant</p>
-                <p className="text-gray-400 text-[11px]">Lun–Sam · 06:00 – 22:00</p>
+                <p className="text-white text-xs font-600">Livraison disponible</p>
+                <p className="text-gray-400 text-[11px]">Dakar · Toutes régions du Sénégal</p>
               </div>
             </div>
           </div>

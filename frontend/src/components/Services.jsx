@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import ServiceModal from './ServiceModal';
 
 // Hook-safe card component
-const ServiceCard = ({ icon, title, desc, tag, delay }) => {
+const ServiceCard = ({ icon, title, desc, tag, delay, onLearnMore }) => {
   const cardRef = useScrollReveal();
 
   return (
@@ -26,18 +27,22 @@ const ServiceCard = ({ icon, title, desc, tag, delay }) => {
       <p className="font-body text-gray-400 text-sm font-light leading-relaxed">{desc}</p>
 
       {/* Arrow link */}
-      <div className="mt-6 flex items-center gap-2 text-brand text-xs font-body font-semibold uppercase tracking-[0.12em] opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0">
+      <button 
+        onClick={onLearnMore}
+        className="mt-6 flex items-center gap-2 text-brand text-xs font-body font-semibold uppercase tracking-[0.12em] opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 cursor-pointer w-full text-left focus:outline-none"
+      >
         <span>En savoir plus</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
-      </div>
+      </button>
     </div>
   );
 };
 
 const Services = () => {
   const headerRef = useScrollReveal();
+  const [selectedService, setSelectedService] = useState(null);
 
   const disciplines = [
     {
@@ -48,6 +53,14 @@ const Services = () => {
       ),
       title: 'Musculation',
       desc: 'Plateaux équipés de machines professionnelles, poids libres et câbles. Pour sculpter chaque groupe musculaire.',
+      fullDesc: 'Notre espace musculation est conçu pour répondre aux exigences des débutants comme des athlètes confirmés. Nous mettons à votre disposition une gamme complète d\'équipements biomécaniques de pointe et de charges libres.',
+      benefits: [
+        'Machines guidées dernière génération (Leg Press, Hack Squat, etc.)',
+        'Zone haltères allant de 2 kg à 60 kg',
+        'Plateformes d\'haltérophilie avec dalles amortissantes',
+        'Cages à squat et racks de développé couché professionnels'
+      ],
+      image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
       tag: 'Force',
       delay: 0,
     },
@@ -60,6 +73,14 @@ const Services = () => {
       ),
       title: 'Coaching Perso',
       desc: 'Un programme 100% sur-mesure créé par nos experts selon vos objectifs et votre niveau.',
+      fullDesc: 'Atteignez vos objectifs plus rapidement avec un accompagnement individuel. Nos personal trainers certifiés analysent votre métabolisme, votre posture et votre style de vie pour concevoir un plan d\'action exclusif.',
+      benefits: [
+        'Bilan initial complet (InBody, mensurations, tests de force)',
+        'Programme d\'entraînement évolutif sur 12 semaines',
+        'Suivi technique permanent pour éviter les blessures',
+        'Motivation et ajustement des charges en temps réel'
+      ],
+      image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80',
       tag: 'Premium',
       delay: 80,
     },
@@ -72,6 +93,14 @@ const Services = () => {
       ),
       title: 'Boxing',
       desc: 'Technique, cardio, sparring. Cours collectifs et entraînement individuel pour tous niveaux.',
+      fullDesc: 'Que ce soit pour vous défouler, apprendre les techniques de frappe ou préparer un combat, notre zone de boxe équipée vous accueille. Un entraînement intense combinant coordination, vitesse et endurance cardio-vasculaire.',
+      benefits: [
+        'Sacs de frappe lourds et poires de vitesse',
+        'Cours encadrés par des combattants professionnels',
+        'Travail aux paos (pattes d\'ours) pour la réactivité',
+        'Ring d\'entraînement homologué pour le sparring sécurisé'
+      ],
+      image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&q=80',
       tag: 'Combat',
       delay: 160,
     },
@@ -84,6 +113,14 @@ const Services = () => {
       ),
       title: 'Nutrition',
       desc: 'Plans alimentaires personnalisés par nos coachs certifiés pour maximiser vos résultats.',
+      fullDesc: 'L\'entraînement ne représente que 30% des résultats. Nos experts en diététique sportive vous aident à structurer vos repas pour nourrir vos muscles, perdre de la graisse et maximiser votre niveau d\'énergie quotidien.',
+      benefits: [
+        'Analyse de vos habitudes alimentaires actuelles',
+        'Création d\'un plan nutritionnel réaliste et adapté',
+        'Conseils sur la supplémentation (protéines, vitamines)',
+        'Recettes saines et faciles à préparer pour le quotidien'
+      ],
+      image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80',
       tag: 'Bien-être',
       delay: 240,
     },
@@ -95,6 +132,14 @@ const Services = () => {
       ),
       title: 'Cardio & HIIT',
       desc: 'Séances haute intensité pour brûler les graisses et booster votre endurance cardiovasculaire.',
+      fullDesc: 'Boostez votre métabolisme de base avec nos circuits Training et nos équipements cardio dernière génération. Le High Intensity Interval Training (HIIT) est la méthode la plus rapide pour améliorer votre souffle et sécher.',
+      benefits: [
+        'Tapis de course, vélos elliptiques, rameurs et Air Bikes',
+        'Cours collectifs dynamiques en musique',
+        'Exercices au poids de corps et plyométrie',
+        'Moniteurs de fréquence cardiaque connectés disponibles'
+      ],
+      image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80',
       tag: 'Énergie',
       delay: 320,
     },
@@ -107,6 +152,14 @@ const Services = () => {
       ),
       title: 'Mobilité & Récup',
       desc: 'Récupération active, prévention des blessures et amélioration durable de la flexibilité.',
+      fullDesc: 'La récupération est la clé pour durer. Notre espace dédié à la mobilité vous permet de relâcher les tensions musculaires, d\'améliorer votre souplesse articulaire et de retrouver un corps sans douleur.',
+      benefits: [
+        'Cours de stretching et yoga pour sportifs',
+        'Mise à disposition de Foam Rollers (rouleaux de massage)',
+        'Ateliers d\'automassage myofascial',
+        'Espace calme et relaxant favorisant la détente nerveuse'
+      ],
+      image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80',
       tag: 'Récupération',
       delay: 400,
     },
@@ -138,10 +191,15 @@ const Services = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {disciplines.map((d, i) => (
-            <ServiceCard key={i} {...d} />
+            <ServiceCard key={i} {...d} onLearnMore={() => setSelectedService(d)} />
           ))}
         </div>
       </div>
+
+      {/* Service Details Modal */}
+      {selectedService && (
+        <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
+      )}
     </section>
   );
 };

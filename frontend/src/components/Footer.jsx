@@ -4,11 +4,10 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const navLinks = [
-    { href: '#about',    label: 'Notre ADN' },
-    { href: '#services', label: 'Disciplines' },
-    { href: '#schedule', label: 'Planning' },
-    { href: '#pricing',  label: 'Tarifs' },
-    { href: '#contact',  label: 'Contact' },
+    { href: '#',        label: 'Accueil' },
+    { href: '#shop',    label: 'Boutique' },
+    { href: '#about',   label: 'À propos' },
+    { href: '#contact', label: 'Contact' },
   ];
 
   const socials = [
@@ -71,7 +70,7 @@ const Footer = () => {
             </a>
 
             <p className="font-body text-gray-400 text-sm font-light leading-relaxed mb-8 max-w-xs">
-              L'écosystème fitness d'élite de Dakar. Coachs certifiés, équipements premium et une communauté de passionnés pour vous pousser plus loin.
+              La boutique fitness de référence au Sénégal. Matériel professionnel, livraison rapide à Dakar et partout au Sénégal.
             </p>
 
             {/* Socials */}
@@ -133,13 +132,13 @@ const Footer = () => {
                 </svg>
                 <a href="mailto:contact@globalfitness.sn" className="font-body text-gray-400 text-sm hover:text-white transition-colors">contact@globalfitness.sn</a>
               </li>
-              <li className="flex items-start gap-3">
-                <svg className="w-4 h-4 text-brand flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <li className="flex items-center gap-3">
+                <svg className="w-4 h-4 text-brand flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
                 </svg>
                 <div className="font-body text-gray-400 text-sm font-light">
-                  Lun – Sam : 06h – 22h<br />
-                  <span className="text-gray-500 text-xs">Dimanche : 10h – 20h</span>
+                  Livraison 24h à Dakar<br />
+                  <span className="text-gray-500 text-xs">Partout au Sénégal</span>
                 </div>
               </li>
             </ul>
@@ -149,8 +148,8 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="container mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-body text-gray-600 text-xs">© {year} Global Fitness Sénégal · Tous droits réservés.</p>
-          <p className="font-display italic text-sm text-gradient">Forge Your Legacy.</p>
+          <p className="font-body text-gray-600 text-xs">© {year} Global Fit Sport Sénégal · Tous droits réservés.</p>
+          <p className="font-display italic text-sm text-gradient">Votre réussite, notre priorité.</p>
         </div>
       </div>
     </footer>

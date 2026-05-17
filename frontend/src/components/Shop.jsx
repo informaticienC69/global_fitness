@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useCart } from '../context/CartContext';
+import ProductModal from './ProductModal';
 
 // ─── Custom Sort Dropdown ─────────────────────────────
 const SortDropdown = ({ value, onChange, options }) => {
@@ -48,7 +49,7 @@ const SortDropdown = ({ value, onChange, options }) => {
 };
 
 // ─── Product Card ─────────────────────────────────────
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onLearnMore }) => {
   const { addItem, totalItems } = useCart();
   const [added, setAdded] = useState(false);
   const [count, setCount] = useState(0);
@@ -128,21 +129,31 @@ const ProductCard = ({ product }) => {
               <div className="font-body text-gray-600 text-xs line-through">{fmt(product.oldPrice)}</div>
             )}
           </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
+          <button
+            onClick={onLearnMore}
+            className="flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-body text-[10px] font-bold uppercase tracking-wider transition-colors border border-white/10"
+          >
+            En savoir plus
+          </button>
+          
           <button
             id={`shop-add-${product.id}`}
             onClick={handleAdd}
             disabled={product.inStock === false}
-            className={`flex-shrink-0 flex items-center gap-1.5 py-2.5 px-4 rounded-xl text-[11px] font-body font-bold uppercase tracking-[0.1em] transition-all duration-300 ${
+            className={`flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 ${
               product.inStock === false
                 ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
                 : 'bg-brand-gradient text-white shadow-[0_4px_15px_rgba(230,57,70,0.25)] hover:shadow-[0_6px_25px_rgba(230,57,70,0.45)] hover:-translate-y-0.5'
             }`}
+            title="Ajouter au panier"
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M12 5v14M5 12h14"/>
             </svg>
-            {count > 0 ? `(${count}) Ajouter` : 'Ajouter'}
           </button>
         </div>
       </div>
@@ -167,6 +178,7 @@ const Shop = () => {
   const [activeCategory, setActiveCategory] = useState('Tous');
   const [sortBy, setSortBy] = useState('default');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const load = async () => {
@@ -265,7 +277,13 @@ const Shop = () => {
               {filtered.length} produit{filtered.length > 1 ? 's' : ''}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filtered.map(p => <ProductCard key={p.id} product={p} />)}
+              {filtered.map(p => (
+                <ProductCard 
+                  key={p.id} 
+                  product={p} 
+                  onLearnMore={() => setSelectedProduct(p)} 
+                />
+              ))}
             </div>
           </>
         )}
@@ -278,6 +296,11 @@ const Shop = () => {
           <a href="#contact" className="btn-primary flex-shrink-0">Demander conseil</a>
         </div>
       </div>
+
+      {/* Product Details Modal */}
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
     </section>
   );
 };

@@ -6,14 +6,14 @@ const About = () => {
   const imgRef  = useScrollReveal({ threshold: 0.2 });
 
   const values = [
-    { icon: '⚡', label: 'Performance', desc: 'Chaque programme est conçu pour des résultats mesurables.' },
-    { icon: '🎯', label: 'Précision',   desc: 'Un suivi individualisé à chaque étape de votre progression.' },
-    { icon: '🤝', label: 'Communauté', desc: 'Une famille de passionnés qui se poussent mutuellement.' },
+    { icon: '🏆', label: 'Qualité Professionnelle', desc: 'Chaque produit est sélectionné parmi les meilleures marques mondiales d\'équipements fitness.' },
+    { icon: '🚚', label: 'Livraison Rapide',        desc: 'Livraison sous 24h à Dakar et partout au Sénégal. Suivi de commande en temps réel.' },
+    { icon: '🎯', label: 'Conseil Expert',           desc: 'Notre équipe vous guide pour choisir le matériel adapté à vos objectifs et votre budget.' },
   ];
 
   return (
     <section id="about" className="relative py-32">
-      {/* Subtle red glow left */}
+      {/* Subtle glow left */}
       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand/6 blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-10 relative z-10">
@@ -23,8 +23,8 @@ const About = () => {
           <div ref={imgRef} className="animate-bascule lg:w-5/12 w-full relative flex-shrink-0">
             <div className="relative rounded-2xl overflow-hidden border border-white/8 shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
               <img
-                src="/paul.jpeg"
-                alt="Global Fitness Head Coach"
+                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"
+                alt="Équipements fitness Global Fit Sport"
                 className="w-full h-[520px] object-cover"
               />
               {/* Gradient overlay on image */}
@@ -39,8 +39,8 @@ const About = () => {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-display text-white text-sm font-bold uppercase tracking-wide">Head Coach Certifié</p>
-                    <p className="font-body text-gray-400 text-[11px] uppercase tracking-[0.12em]">15 ans d'expérience • Ex-compétiteur</p>
+                    <p className="font-display text-white text-sm font-bold uppercase tracking-wide">Matériel Certifié</p>
+                    <p className="font-body text-gray-400 text-[11px] uppercase tracking-[0.12em]">Qualité pro · Garantie constructeur</p>
                   </div>
                 </div>
               </div>
@@ -49,7 +49,7 @@ const About = () => {
             {/* Floating stat card */}
             <div className="absolute -top-6 -right-6 glass rounded-xl p-5 border border-white/8 shadow-2xl text-center">
               <div className="font-display text-3xl font-black text-gradient">98%</div>
-              <div className="font-body text-gray-400 text-[10px] uppercase tracking-[0.15em] mt-1">Taux de<br/>satisfaction</div>
+              <div className="font-body text-gray-400 text-[10px] uppercase tracking-[0.15em] mt-1">Clients<br/>satisfaits</div>
             </div>
           </div>
 
@@ -57,20 +57,20 @@ const About = () => {
           <div ref={textRef} className="animate-on-scroll lg:w-7/12 w-full">
             <div className="flex items-center gap-3 mb-5">
               <div className="divider-brand" />
-              <span className="eyebrow">Notre ADN</span>
+              <span className="eyebrow">À propos de nous</span>
             </div>
 
             <h2 className="font-display text-white mb-8" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: '1' }}>
-              L'EXCELLENCE<br />
-              <span className="text-gradient">AU CŒUR DE</span><br />
-              DAKAR
+              SPÉCIALISTE FITNESS<br />
+              <span className="text-gradient">AU SÉNÉGAL</span><br />
+              DEPUIS 2020
             </h2>
 
             <p className="font-body text-gray-300 text-base font-light leading-relaxed mb-5">
-              Fondé à Dakar, <strong className="text-white font-500">Global Fitness</strong> est né d'une conviction simple : chaque personne mérite un accompagnement d'élite, quelle que soit son point de départ.
+              <strong className="text-white font-500">Global Fit Sport</strong> est la boutique en ligne de référence pour l'achat d'équipements fitness et de musculation au Sénégal. Basée à Dakar, nous proposons une sélection rigoureuse de matériel professionnel.
             </p>
             <p className="font-body text-gray-400 text-base font-light leading-relaxed mb-10">
-              Nos coachs certifiés combinent expertise scientifique et passion du terrain pour vous offrir des résultats concrets, durables et mesurables — dans un environnement premium et bienveillant.
+              Haltères, barres olympiques, machines de musculation, équipements cardio, accessoires — tout ce qu'il faut pour équiper votre salle à domicile ou votre gym professionnel, livré directement chez vous.
             </p>
 
             {/* Values */}
@@ -87,8 +87,8 @@ const About = () => {
             </div>
 
             <div className="mt-10 flex gap-4">
-              <a href="#contact" className="btn-primary">Nous rejoindre</a>
-              <a href="#services" className="btn-outline">Voir les disciplines</a>
+              <a href="#shop" className="btn-primary">Voir la boutique</a>
+              <a href="#contact" className="btn-outline">Nous contacter</a>
             </div>
           </div>
 
