@@ -1,7 +1,36 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// ─── 4 photos de techniciens / installations fitness ──
+const SLIDES = [
+  {
+    url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=85',
+    caption: 'Installation sur site',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=700&q=85',
+    caption: 'Mise en service complète',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=85',
+    caption: 'Équipements professionnels',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=700&q=85',
+    caption: 'Salle prête à l\'emploi',
+  },
+];
 
 const Hero = () => {
+  const [current, setCurrent] = useState(0);
+
+  // Auto-advance every 3.5 s
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrent(c => (c + 1) % SLIDES.length);
+    }, 3500);
+    return () => clearInterval(id);
+  }, []);
 
   const stats = [
     { value: '500+', label: 'Clients Équipés' },
@@ -18,16 +47,16 @@ const Hero = () => {
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#E8820C]/6 blur-[100px] pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 md:px-10 relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20">
 
-          {/* ── Left: Text content ── */}
-          <motion.div 
+          {/* ── Left: Text ── */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex-1"
           >
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
@@ -37,18 +66,19 @@ const Hero = () => {
               <span className="eyebrow">Dakar, Sénégal · global_fit_sport</span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-display text-white mb-4" style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}
+              className="font-display text-white mb-4"
+              style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}
             >
               ÉQUIPEZ VOTRE<br />
               <span className="text-gradient italic font-black">ESPACE.</span><br />
               PERFORMEZ.
             </motion.h1>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
@@ -56,7 +86,7 @@ const Hero = () => {
             >
               <strong className="text-white font-600">Vente · Installation · Maintenance</strong>
             </motion.p>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -65,8 +95,7 @@ const Hero = () => {
               Nous accompagnons particuliers et professionnels dans la création d'espaces fitness performants — de la sélection du matériel à la mise en service complète.
             </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
@@ -84,8 +113,7 @@ const Hero = () => {
               </a>
             </motion.div>
 
-            {/* Trust badges */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9, duration: 0.6 }}
@@ -102,39 +130,127 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* ── Right: Stats grid ── */}
-          <div className="flex-shrink-0 lg:w-80 w-full">
+          {/* ── Right: Stats + Photo Carousel ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0 lg:w-[360px] w-full flex flex-col gap-3"
+          >
+            {/* Stats grid 2×2 */}
             <div className="grid grid-cols-2 gap-3">
               {stats.map((s, i) => (
                 <div
                   key={i}
-                  className="glass card-hover rounded-xl p-6 border border-white/5 text-center"
-                  style={{ animationDelay: `${i * 100}ms` }}
+                  className="glass card-hover rounded-xl p-5 border border-white/5 text-center"
                 >
-                  <div className="font-display text-4xl font-black text-gradient mb-1">{s.value}</div>
-                  <div className="font-body text-gray-400 text-[11px] uppercase tracking-[0.15em] font-500">{s.label}</div>
+                  <div className="font-display text-3xl font-black text-gradient mb-1">{s.value}</div>
+                  <div className="font-body text-gray-400 text-[11px] uppercase tracking-[0.15em]">{s.label}</div>
                 </div>
               ))}
             </div>
 
-            {/* Badge terrain */}
-            <div className="mt-3 glass rounded-xl p-4 border border-[#F5A623]/15 flex items-center gap-3">
-              <div className="relative w-3 h-3 flex-shrink-0">
-                <span className="block w-3 h-3 rounded-full bg-[#F5A623]" />
-                <span className="pulse-dot absolute inset-0 rounded-full bg-[#F5A623]" />
+            {/* ── Photo Carousel ── */}
+            <div className="relative mt-1 rounded-2xl overflow-hidden border border-[#F5A623]/20 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+              style={{ height: '230px' }}>
+
+              {/* Sliding images */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current}
+                  initial={{ opacity: 0, scale: 1.06 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={SLIDES[current].url}
+                    alt={SLIDES[current].caption}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Dark gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent z-10 pointer-events-none" />
+
+              {/* Gold top bar accent */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#F5A623] via-[#FFD080] to-[#E8820C] z-20" />
+
+              {/* Bottom overlay: badge + caption */}
+              <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-4 pt-8">
+                {/* Badge */}
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="relative w-2 h-2 flex-shrink-0">
+                    <span className="block w-2 h-2 rounded-full bg-[#F5A623]" />
+                    <span className="pulse-dot absolute inset-0 rounded-full bg-[#F5A623]" />
+                  </div>
+                  <span className="font-body text-[10px] font-700 uppercase tracking-[0.2em] text-[#F5A623]">
+                    Techniciens Certifiés
+                  </span>
+                </div>
+                {/* Caption */}
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`cap-${current}`}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.4 }}
+                    className="font-display text-white text-sm uppercase tracking-wide font-bold leading-tight"
+                  >
+                    {SLIDES[current].caption}
+                  </motion.p>
+                </AnimatePresence>
+                <p className="font-body text-gray-400 text-[10px] mt-0.5 uppercase tracking-[0.12em]">
+                  Installation · Maintenance · SAV
+                </p>
               </div>
-              <div className="font-body">
-                <p className="text-white text-xs font-600">Techniciens disponibles</p>
-                <p className="text-gray-400 text-[11px]">Dakar · Toutes régions du Sénégal</p>
+
+              {/* Dots navigation */}
+              <div className="absolute top-3 right-3 z-20 flex gap-1.5">
+                {SLIDES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className="focus:outline-none"
+                    aria-label={`Photo ${i + 1}`}
+                  >
+                    <motion.div
+                      animate={{
+                        width: i === current ? 20 : 6,
+                        backgroundColor: i === current ? '#F5A623' : 'rgba(255,255,255,0.3)',
+                      }}
+                      transition={{ duration: 0.3 }}
+                      className="h-1.5 rounded-full"
+                    />
+                  </button>
+                ))}
+              </div>
+
+              {/* Progress bar */}
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10 z-20">
+                <motion.div
+                  key={`progress-${current}`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 3.5, ease: 'linear' }}
+                  style={{ transformOrigin: 'left' }}
+                  className="h-full bg-gradient-to-r from-[#F5A623] to-[#FFD080]"
+                />
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer"
-          onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer"
+          onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}
+        >
           <span className="font-body text-[10px] uppercase tracking-[0.2em] text-gray-400">Scroll</span>
           <svg className="w-4 h-4 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
