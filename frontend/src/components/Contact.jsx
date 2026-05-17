@@ -15,15 +15,16 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      const data = await res.json();
+      
       if (res.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', phone: '', interest: '', message: '' });
       } else {
-        setStatus('error');
+        setStatus(`error: ${data.details || data.error || 'Erreur inconnue'}`);
       }
-    } catch {
-      setStatus('success');
-      setFormData({ name: '', email: '', phone: '', interest: '', message: '' });
+    } catch (err) {
+      setStatus(`error: ${err.message}`);
     }
   };
 
@@ -216,10 +217,15 @@ const Contact = () => {
                     />
                   </div>
 
-                  {status === 'error' && (
-                    <p className="text-red-400 text-xs font-body bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
-                      Une erreur s'est produite. Réessayez ou contactez-nous via WhatsApp.
-                    </p>
+                  {status && status.startsWith('error') && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                      <p className="text-red-400 text-xs font-body font-bold mb-1">
+                        Erreur d'envoi d'email
+                      </p>
+                      <p className="text-gray-400 text-[10px] font-mono break-words">
+                        {status.replace('error: ', '')}
+                      </p>
+                    </div>
                   )}
 
                   <button

@@ -140,14 +140,18 @@ app.post('/api/contact', async (req, res) => {
   try {
     await sendContactNotification({ name, email, phone, address, message });
     console.log(`📩 Message de contact de ${name} (${email}) — email envoyé`);
+    
+    res.status(201).json({
+      success: true,
+      message: 'Message reçu ! Nous vous répondrons sous 24h.',
+    });
   } catch (err) {
     console.error('Erreur envoi email contact:', err.message);
+    res.status(500).json({ 
+      error: 'Erreur lors de l\'envoi de l\'email.', 
+      details: err.message 
+    });
   }
-
-  res.status(201).json({
-    success: true,
-    message: 'Message reçu ! Nous vous répondrons sous 24h.',
-  });
 });
 
 // ─── POST /api/orders — Commande Boutique ─────────────────────────────────────
@@ -177,10 +181,9 @@ app.post('/api/orders', async (req, res) => {
     });
   } catch (err) {
     console.error('Erreur envoi email commande:', err.message);
-    res.status(201).json({
-      success: true,
-      orderId,
-      message: 'Commande enregistrée. Notre équipe vous contactera sous 24h.',
+    res.status(500).json({
+      error: 'Erreur lors de l\'envoi de la confirmation par email.',
+      details: err.message
     });
   }
 });
