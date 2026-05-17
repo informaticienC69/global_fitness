@@ -1,5 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const TECHNICIAN_IMAGES = [
+  '/images/technicians/tech-1.png',
+  '/images/technicians/tech-2.png',
+  '/images/technicians/tech-3.png',
+  '/images/technicians/tech-4.png',
+];
+
+const ImageSlider = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % TECHNICIAN_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative w-full h-[520px] bg-[#111] overflow-hidden">
+      <AnimatePresence>
+        <motion.img
+          key={index}
+          src={TECHNICIAN_IMAGES[index]}
+          alt={`Intervention Global Fit Sport ${index + 1}`}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </AnimatePresence>
+
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none z-0" />
+
+      {/* Indicators */}
+      <div className="absolute top-4 right-4 flex gap-1.5 z-10">
+        {TECHNICIAN_IMAGES.map((_, i) => (
+          <button key={i} onClick={() => setIndex(i)} className="p-1 cursor-pointer">
+            <div className={`h-1 rounded-full transition-all duration-500 ${i === index ? 'w-6 bg-[#F5A623] shadow-[0_0_10px_rgba(245,166,35,0.5)]' : 'w-2 bg-white/30 hover:bg-white/50'}`} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const About = () => {
   const textRef = useScrollReveal();
@@ -21,12 +69,7 @@ const About = () => {
           {/* ── Image Side ── */}
           <div ref={imgRef} className="animate-bascule lg:w-5/12 w-full relative flex-shrink-0">
             <div className="relative rounded-2xl overflow-hidden border border-white/8 shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-              <img
-                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"
-                alt="Techniciens Global Fit Sport en intervention"
-                className="w-full h-[520px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <ImageSlider />
 
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="glass rounded-xl p-4 border border-[#F5A623]/20 flex items-center gap-4">
