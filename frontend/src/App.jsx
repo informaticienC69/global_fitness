@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import About from './components/About';
+import Services from './components/Services';
 import PromoVideo from './components/PromoVideo';
 import Shop from './components/Shop';
 import Contact from './components/Contact';
@@ -26,6 +27,7 @@ function App() {
       <CartDrawer />
       <main className="flex-grow pt-0 relative z-10">
         <Hero />
+        <Services />
         <About />
         <PromoVideo />
         <Shop />

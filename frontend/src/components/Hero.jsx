@@ -5,7 +5,7 @@ const Hero = () => {
   const revealRef = useScrollReveal();
 
   const stats = [
-    { value: '500+', label: 'Clients Satisfaits' },
+    { value: '500+', label: 'Clients Équipés' },
     { value: '100+', label: 'Produits Disponibles' },
     { value: '24h',  label: 'Livraison Dakar' },
     { value: '5★',   label: 'Avis Clients' },
@@ -14,47 +14,56 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
 
-      {/* Gradient overlays for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-black/75 z-0" />
-
-      {/* Orange glow accent top-right */}
-      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-brand/10 blur-[120px] pointer-events-none z-0" />
-      {/* Glow bottom-left */}
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-accent/8 blur-[100px] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/70 z-0" />
+      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full bg-[#F5A623]/8 blur-[140px] pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#E8820C]/6 blur-[100px] pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 md:px-10 relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-center gap-16 lg:gap-24">
 
           {/* ── Left: Text content ── */}
           <div ref={revealRef} className="flex-1 animate-on-scroll">
-            {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-8">
               <div className="divider-brand" />
-              <span className="eyebrow">Dakar, Sénégal — Boutique en ligne</span>
+              <span className="eyebrow">Dakar, Sénégal · global_fit_sport</span>
             </div>
 
-            {/* Main headline */}
-            <h1 className="font-display text-white mb-6" style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)', lineHeight: '0.95' }}>
-              ÉQUIPEZ-VOUS.<br />
-              <span className="text-gradient italic font-black">PERFORMEZ.</span>
+            <h1 className="font-display text-white mb-4" style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6rem)', lineHeight: '0.95' }}>
+              VOTRE SALLE<br />
+              <span className="text-gradient italic font-black">PRÊTE À</span><br />
+              L'EMPLOI.
             </h1>
 
-            <p className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-10 max-w-xl">
-              La boutique fitness <strong className="text-white font-500">#1 au Sénégal</strong>. Haltères, racks, machines, accessoires — du matériel professionnel livré rapidement à Dakar et partout au Sénégal.
+            <p className="font-body text-gray-300 text-base md:text-lg font-light leading-relaxed mb-3 max-w-xl">
+              <strong className="text-white font-600">Vente · Installation · Maintenance</strong>
+            </p>
+            <p className="font-body text-gray-400 text-sm leading-relaxed mb-10 max-w-xl">
+              Nous accompagnons particuliers et professionnels dans la création d'espaces fitness performants — de la sélection du matériel à la mise en service complète.
             </p>
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#shop" id="hero-cta-shop" className="btn-primary">
+              <a href="#services" id="hero-cta-services" className="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-                Voir les produits
+                Nos services
               </a>
-              <a href="#contact" id="hero-cta-contact" className="btn-outline">
-                Nous contacter
+              <a href="#shop" id="hero-cta-shop" className="btn-outline">
+                Voir la boutique
               </a>
+            </div>
+
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-3 mt-8">
+              {['Installation pro', 'SAV réactif', 'Techniciens certifiés', 'Devis gratuit'].map((b) => (
+                <span key={b} className="flex items-center gap-1.5 text-[11px] font-body font-600 uppercase tracking-wider text-gray-400">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="3" strokeLinecap="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                  {b}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -73,14 +82,14 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* Livraison badge */}
-            <div className="mt-3 glass rounded-xl p-4 border border-white/5 flex items-center gap-3">
+            {/* Badge terrain */}
+            <div className="mt-3 glass rounded-xl p-4 border border-[#F5A623]/15 flex items-center gap-3">
               <div className="relative w-3 h-3 flex-shrink-0">
-                <span className="block w-3 h-3 rounded-full bg-green-400" />
-                <span className="pulse-dot absolute inset-0 rounded-full bg-green-400" />
+                <span className="block w-3 h-3 rounded-full bg-[#F5A623]" />
+                <span className="pulse-dot absolute inset-0 rounded-full bg-[#F5A623]" />
               </div>
               <div className="font-body">
-                <p className="text-white text-xs font-600">Livraison disponible</p>
+                <p className="text-white text-xs font-600">Techniciens disponibles</p>
                 <p className="text-gray-400 text-[11px]">Dakar · Toutes régions du Sénégal</p>
               </div>
             </div>
@@ -88,8 +97,9 @@ const Hero = () => {
 
         </div>
 
-        {/* ── Bottom scroll indicator ── */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer"
+          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
           <span className="font-body text-[10px] uppercase tracking-[0.2em] text-gray-400">Scroll</span>
           <svg className="w-4 h-4 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
