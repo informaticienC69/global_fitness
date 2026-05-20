@@ -38,10 +38,14 @@ const OrderModal = ({ onClose, onSuccess }) => {
         clearCart();
         onSuccess({ orderId: data.orderId, email: form.email, message: data.message });
       } else {
-        setError(data.error || 'Erreur lors de la commande.');
+        // Affiche le détail technique (data.details) en plus du message générique
+        // pour faciliter le debug en production (Vercel)
+        const detail = data.details ? ` — ${data.details}` : '';
+        const codeStr = data.code ? ` [${data.code}]` : '';
+        setError((data.error || 'Erreur lors de la commande.') + detail + codeStr);
       }
-    } catch {
-      setError('Impossible de joindre le serveur. Vérifiez votre connexion.');
+    } catch (err) {
+      setError('Impossible de joindre le serveur. Vérifiez votre connexion. ' + (err?.message || ''));
     } finally {
       setLoading(false);
     }
@@ -167,7 +171,7 @@ const OrderModal = ({ onClose, onSuccess }) => {
             </div>
 
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs px-4 py-3 rounded-xl font-body">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs px-4 py-3 rounded-xl font-body break-words">
                 {error}
               </div>
             )}
