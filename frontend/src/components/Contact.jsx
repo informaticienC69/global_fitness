@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import CustomSelect from './CustomSelect';
 
 const Contact = () => {
   const sectionRef = useScrollReveal();
@@ -194,16 +195,12 @@ const Contact = () => {
 
                   <div>
                     <label className="block font-body text-[10px] font-700 uppercase tracking-[0.15em] text-gray-500 mb-2">Je suis intéressé par</label>
-                    <select
+                    <CustomSelect
                       value={formData.interest}
-                      onChange={e => setFormData({...formData, interest: e.target.value})}
-                      className="w-full bg-[#1A1A1A] border border-white/8 text-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:border-[#F5A623]/50 transition-all font-body text-sm appearance-none cursor-pointer"
-                    >
-                      <option value="">Sélectionnez un service…</option>
-                      {interests.map(opt => (
-                        <option key={opt} value={opt} className="bg-[#1A1A1A]">{opt}</option>
-                      ))}
-                    </select>
+                      onChange={value => setFormData({...formData, interest: value})}
+                      options={interests}
+                      placeholder="Sélectionnez un service…"
+                    />
                   </div>
 
                   <div>

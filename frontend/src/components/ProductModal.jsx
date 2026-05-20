@@ -20,11 +20,11 @@ const ProductModal = ({ product, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex flex-col pt-28 pb-8 px-4 sm:px-6 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex flex-col pt-12 md:pt-20 pb-0 md:pb-8 px-0 md:px-6 overflow-y-auto"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-4xl bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in zoom-in-95 duration-300 my-auto flex-shrink-0">
+      <div className="w-full max-w-4xl bg-[#0a0a0a] border-t border-l border-r border-b-0 md:border-b md:border border-white/10 rounded-t-3xl md:rounded-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] md:shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in slide-in-from-bottom-8 md:slide-in-from-bottom-0 md:zoom-in-95 duration-300 mx-auto mt-auto md:my-auto md:max-h-[85vh] flex-shrink-0">
         
         {/* Close Button */}
         <button
@@ -37,7 +37,7 @@ const ProductModal = ({ product, onClose }) => {
         </button>
 
         {/* ── Left Column : Image ── */}
-        <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-[#111] flex-shrink-0 border-b md:border-b-0 md:border-r border-white/10">
+        <div className="w-full md:w-1/2 h-72 md:h-auto relative bg-[#111] flex-shrink-0 border-b md:border-b-0 md:border-r border-white/10">
           <img
             src={product.image}
             alt={product.name}

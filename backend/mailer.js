@@ -277,7 +277,7 @@ export const sendClientInvoice = async (order) => {
 };
 
 // ─── Email Propriétaire — Nouveau Message de Contact ─────────────────────────
-export const sendContactNotification = async ({ name, email, phone, address, message }) => {
+export const sendContactNotification = async ({ name, email, phone, interest, message }) => {
   const html = `
   <!DOCTYPE html>
   <html>
@@ -310,10 +310,10 @@ export const sendContactNotification = async ({ name, email, phone, address, mes
             <td style="color:#888;font-size:13px;padding:8px 0;vertical-align:top;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Téléphone</td>
             <td style="color:#E0E0E0;font-size:14px;padding:8px 0;">${phone}</td>
           </tr>` : ''}
-          ${address ? `
+          ${interest ? `
           <tr>
-            <td style="color:#888;font-size:13px;padding:8px 0;vertical-align:top;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Sujet / Adr.</td>
-            <td style="color:#E0E0E0;font-size:14px;padding:8px 0;">${address}</td>
+            <td style="color:#888;font-size:13px;padding:8px 0;vertical-align:top;text-transform:uppercase;letter-spacing:0.5px;font-size:11px;">Sujet / Intérêt</td>
+            <td style="color:#E0E0E0;font-size:14px;padding:8px 0;">${interest}</td>
           </tr>` : ''}
         </table>
       </div>

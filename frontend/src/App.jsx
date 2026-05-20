@@ -58,7 +58,7 @@ function App() {
 
       <Navbar />
       <CartDrawer />
-      <main className="flex-grow pt-0 relative z-10">
+      <main className="flex-grow pt-0 relative z-10 overflow-hidden">
         <Hero />
         <Services />
         <Installations />

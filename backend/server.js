@@ -116,7 +116,7 @@ app.get('/api/schedule', (req, res) => {
 
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
-  const { name, email, phone, address, message } = req.body;
+  const { name, email, phone, interest, message } = req.body;
 
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'Nom, email et message sont requis.' });
@@ -138,7 +138,7 @@ app.post('/api/contact', async (req, res) => {
 
   // 2. Envoi email (doit être fait AVANT de répondre sur Vercel, sinon la fonction s'arrête)
   try {
-    await sendContactNotification({ name, email, phone, address, message });
+    await sendContactNotification({ name, email, phone, interest, message });
     console.log(`📩 Message de contact de ${name} (${email}) — email envoyé`);
     
     res.status(201).json({

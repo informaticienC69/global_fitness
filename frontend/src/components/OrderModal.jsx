@@ -53,11 +53,11 @@ const OrderModal = ({ onClose, onSuccess }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex flex-col pt-28 pb-8 px-4 sm:px-6 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex flex-col pt-12 md:pt-20 pb-0 md:pb-8 px-0 md:px-6 overflow-y-auto"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-3xl bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in zoom-in-95 duration-300 my-auto flex-shrink-0">
+      <div className="w-full max-w-4xl bg-[#0a0a0a] border-t border-l border-r border-b-0 md:border-b md:border border-white/10 rounded-t-3xl md:rounded-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.8)] md:shadow-[0_40px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row relative animate-in fade-in slide-in-from-bottom-8 md:slide-in-from-bottom-0 md:zoom-in-95 duration-300 mx-auto mt-auto md:my-auto md:max-h-[85vh] flex-shrink-0">
         
         {/* Close Button (Top Right) */}
         <button
@@ -70,7 +70,7 @@ const OrderModal = ({ onClose, onSuccess }) => {
         </button>
 
         {/* ── Left Column : Order Summary ── */}
-        <div className="md:w-[40%] bg-[#111] p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/5 flex flex-col relative overflow-hidden">
+        <div className="w-full md:w-[40%] bg-[#111] p-6 md:p-10 border-b md:border-b-0 md:border-r border-white/5 flex flex-col relative overflow-hidden flex-shrink-0">
           {/* Subtle gradient glow */}
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand/10 to-transparent pointer-events-none" />
           
@@ -117,7 +117,7 @@ const OrderModal = ({ onClose, onSuccess }) => {
         </div>
 
         {/* ── Right Column : Checkout Form ── */}
-        <div className="md:w-[60%] p-8 md:p-10 flex flex-col justify-center">
+        <div className="w-full md:w-[60%] p-6 md:p-10 flex flex-col overflow-y-auto custom-scrollbar relative">
           <h2 className="font-display text-white text-3xl uppercase tracking-widest mb-2">Paiement</h2>
           <p className="font-body text-gray-400 text-sm mb-8">Saisissez vos informations pour finaliser la commande.</p>
 
