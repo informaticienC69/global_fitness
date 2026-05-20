@@ -7,26 +7,65 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// En local on charge .env, sur Vercel les vars viennent du dashboard
 dotenv.config({ path: path.join(__dirname, '.env') });
 dns.setDefaultResultOrder('ipv4first');
 
+// ─── Validation des variables d'environnement ────────────────────────────────
+const MAIL_USER = process.env.MAIL_USER;
+const MAIL_PASS = process.env.MAIL_PASS;
+
+if (!MAIL_USER || !MAIL_PASS) {
+  console.error(
+    '❌ MAIL_USER ou MAIL_PASS manquant. ' +
+    (process.env.VERCEL
+      ? 'Sur Vercel, configurez ces variables dans Settings → Environment Variables, puis Redeploy.'
+      : 'Localement, vérifiez votre fichier backend/.env')
+  );
+}
+
 // ─── SMTP Transporter ────────────────────────────────────────────────────────
+// Configuration SMTP explicite (plus fiable que service:'gmail' sur serverless)
+// Port 465 SSL est généralement plus rapide que 587 STARTTLS sur cold start.
 export const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // SSL
   auth: {
-    user: process.env.MAIL_USER, // informaticienc78@gmail.com
-    pass: process.env.MAIL_PASS, // Mot de passe d'application Google (16 chars)
+    user: MAIL_USER,
+    pass: MAIL_PASS, // App Password Google (16 caractères)
   },
+  // Timeouts serrés pour éviter de dépasser la limite Vercel (10s Hobby / 30s Pro)
+  connectionTimeout: 10_000, // 10s pour établir la connexion TCP
+  greetingTimeout: 10_000,   // 10s pour le handshake SMTP
+  socketTimeout: 10_000,     // 10s pour la transmission (total worst-case 30s = maxDuration Vercel)
+  // Pool désactivé : sur serverless chaque invocation est isolée, le pool est inutile
+  pool: false,
 });
 
 // ─── Vérification connexion ───────────────────────────────────────────────────
 export const verifyMailer = async () => {
+  if (!MAIL_USER || !MAIL_PASS) {
+    throw new Error('MAIL_USER/MAIL_PASS non configurés (variables d\'environnement manquantes)');
+  }
   try {
     await transporter.verify();
     console.log('✅ Mailer connecté — Gmail SMTP OK');
   } catch (err) {
-    console.warn('⚠️  Mailer non connecté (mode dégradé) :', err.message);
+    console.warn('⚠️  Mailer non connecté :', err.message);
+    throw err;
   }
+};
+
+// ─── Helper : envoi sécurisé avec validation préalable ───────────────────────
+const safeSendMail = async (mailOptions) => {
+  if (!MAIL_USER || !MAIL_PASS) {
+    throw new Error(
+      'Configuration email manquante : MAIL_USER ou MAIL_PASS non défini. ' +
+      'Vérifiez les variables d\'environnement Vercel.'
+    );
+  }
+  return transporter.sendMail(mailOptions);
 };
 
 // ─── Formatage prix FCFA ──────────────────────────────────────────────────────
@@ -111,7 +150,7 @@ export const sendOwnerNotification = async (order) => {
 
       <!-- 5. Footer -->
       <div style="padding:20px 24px;background-color:#080808;text-align:center;border-top:1px solid #1A1A1A;">
-        <p style="margin:0;color:#555;font-size:12px;">Contact support : <a href="mailto:${process.env.MAIL_USER}" style="color:#F5A623;text-decoration:none;">${process.env.MAIL_USER}</a></p>
+        <p style="margin:0;color:#555;font-size:12px;">Contact support : <a href="mailto:${MAIL_USER}" style="color:#F5A623;text-decoration:none;">${MAIL_USER}</a></p>
         <p style="margin:6px 0 0;color:#333;font-size:10px;text-transform:uppercase;letter-spacing:1px;">Global Fit Sport · Dakar, Sénégal</p>
       </div>
 
@@ -119,9 +158,9 @@ export const sendOwnerNotification = async (order) => {
   </body>
   </html>`;
 
-  return transporter.sendMail({
-    from: `"Global Fitness Boutique" <${process.env.MAIL_USER}>`,
-    to: process.env.MAIL_USER, // L'owner reçoit sur le même Gmail
+  return safeSendMail({
+    from: `"Global Fitness Boutique" <${MAIL_USER}>`,
+    to: MAIL_USER, // L'owner reçoit sur le même Gmail
     subject: `🛒 Nouvelle commande #${order.id} — ${order.customer.name} — ${fmt(order.total)}`,
     html,
   });
@@ -220,7 +259,7 @@ export const sendClientInvoice = async (order) => {
 
       <!-- 5. Footer -->
       <div style="padding:20px 24px;background-color:#080808;text-align:center;border-top:1px solid #1A1A1A;">
-        <p style="margin:0;color:#555;font-size:12px;">Une question ? <a href="mailto:${process.env.MAIL_USER}" style="color:#F5A623;text-decoration:none;">Contactez notre équipe</a></p>
+        <p style="margin:0;color:#555;font-size:12px;">Une question ? <a href="mailto:${MAIL_USER}" style="color:#F5A623;text-decoration:none;">Contactez notre équipe</a></p>
         <p style="margin:6px 0 0;color:#333;font-size:10px;text-transform:uppercase;letter-spacing:1px;">Global Fit Sport · Dakar, Sénégal</p>
       </div>
 
@@ -228,10 +267,10 @@ export const sendClientInvoice = async (order) => {
   </body>
   </html>`;
 
-  return transporter.sendMail({
-    from: `"Global Fitness" <${process.env.MAIL_USER}>`,
+  return safeSendMail({
+    from: `"Global Fitness" <${MAIL_USER}>`,
     to: order.customer.email,
-    replyTo: process.env.MAIL_USER,
+    replyTo: MAIL_USER,
     subject: `✅ Votre commande Global Fitness #${order.id} — ${fmt(order.total)}`,
     html,
   });
@@ -301,9 +340,9 @@ export const sendContactNotification = async ({ name, email, phone, address, mes
   </body>
   </html>`;
 
-  return transporter.sendMail({
-    from: `"Global Fitness Site" <${process.env.MAIL_USER}>`,
-    to: process.env.MAIL_USER,
+  return safeSendMail({
+    from: `"Global Fitness Site" <${MAIL_USER}>`,
+    to: MAIL_USER,
     replyTo: email,
     subject: `📩 Message de ${name} — Global Fitness`,
     html,

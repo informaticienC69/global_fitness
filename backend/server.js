@@ -7,7 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import { verifyMailer, sendOwnerNotification, sendClientInvoice, sendContactNotification } from './mailer.js';
+import { sendOwnerNotification, sendClientInvoice, sendContactNotification } from './mailer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -146,10 +146,17 @@ app.post('/api/contact', async (req, res) => {
       message: 'Message reçu ! Nous vous répondrons sous 24h.',
     });
   } catch (err) {
-    console.error('Erreur envoi email contact:', err.message);
+    console.error('❌ Erreur envoi email contact:', {
+      message: err.message,
+      code: err.code,
+      command: err.command,
+      hasMailUser: !!process.env.MAIL_USER,
+      hasMailPass: !!process.env.MAIL_PASS,
+    });
     res.status(500).json({ 
       error: 'Erreur lors de l\'envoi de l\'email.', 
-      details: err.message 
+      details: err.message,
+      code: err.code,
     });
   }
 });
@@ -180,10 +187,17 @@ app.post('/api/orders', async (req, res) => {
       message: `Commande confirmée ! Une facture vous a été envoyée à ${customer.email}`,
     });
   } catch (err) {
-    console.error('Erreur envoi email commande:', err.message);
+    console.error('❌ Erreur envoi email commande:', {
+      message: err.message,
+      code: err.code,
+      command: err.command,
+      hasMailUser: !!process.env.MAIL_USER,
+      hasMailPass: !!process.env.MAIL_PASS,
+    });
     res.status(500).json({
       error: 'Erreur lors de l\'envoi de la confirmation par email.',
-      details: err.message
+      details: err.message,
+      code: err.code,
     });
   }
 });
